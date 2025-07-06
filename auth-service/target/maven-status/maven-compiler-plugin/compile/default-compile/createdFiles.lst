@@ -1,8 +1,0 @@
-com\devconnect\auth\RegisterRequest.class
-com\devconnect\auth\AuthServiceApplication.class
-com\devconnect\auth\JWTUtil.class
-com\devconnect\auth\AuthRepository.class
-com\devconnect\auth\User.class
-com\devconnect\auth\AuthController.class
-com\devconnect\auth\AuthService.class
-com\devconnect\auth\LoginRequest.class

@@ -2,19 +2,24 @@ package com.devconnect.auth;
 
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
     private AuthRepository authRepository;
+    private JWTUtil jwtUtil;
 
-    AuthService(AuthRepository authRepository) {
+    AuthService(AuthRepository authRepository, JWTUtil jwtUtil) {
         this.authRepository = authRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     public void registerUser(RegisterRequest request) {
-        String userEmail = request.getEmail();
+        String userEmail = request.email();
 
         Optional <User> user = authRepository.findByEmail(userEmail);
 
@@ -23,31 +28,34 @@ public class AuthService {
             return;
         }
 
-        String userPassword = hashPassword(request.getPassword());
+        String userPassword = hashPassword(request.password());
 
         User newUser = new User();
         newUser.setEmail(userEmail);
         newUser.setPassword(userPassword);
-        newUser.setName(request.getName());
+        newUser.setName(request.fullName());
 
         authRepository.save(newUser);
 
         System.out.println("User registered successfully");
     }
 
-    public String loginUser(LoginRequest request) {
-        // TODO: Check the users email and password. If they match return a token and log them into the system
-        String userEmail = request.getEmail();
-        String userPassword = request.getPassword();
+    public AuthResponse loginUser(LoginRequest request) {
+        String userEmail = request.email();
+        String userPassword = request.password();
 
         User user = authRepository.findByEmail(userEmail)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Credentials") );
 
         if (!checkPassword(userPassword, user.getPassword())) {
-            
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Credentials");
         }
 
-        return "";
+        String token = jwtUtil.generateToken(userEmail);
+
+        System.out.println("Logging in...\nHere is your session token: " + token);
+
+        return new AuthResponse(token);
     }
 
     private String hashPassword(String password) {
@@ -56,6 +64,7 @@ public class AuthService {
     }
 
     private boolean checkPassword(String password, String hashPassword) {
-        return false;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(password, hashPassword);
     }
 }
