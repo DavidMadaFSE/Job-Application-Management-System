@@ -10,7 +10,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JWTUtil {
-    private String secret = "auth-service-key-code";
+    private String secret = "this is a super secret key for this system";
 
     public String generateToken(String userName) {
         return Jwts.builder()
