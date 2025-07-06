@@ -1,10 +1,15 @@
-package com.devconnect.auth;
+package com.devconnect.auth.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.devconnect.auth.dto.AuthResponse;
+import com.devconnect.auth.dto.LoginRequest;
+import com.devconnect.auth.dto.RegisterRequest;
+import com.devconnect.auth.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")

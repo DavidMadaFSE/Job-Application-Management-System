@@ -1,4 +1,4 @@
-package com.devconnect.auth;
+package com.devconnect.auth.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.devconnect.auth;
+package com.devconnect.auth.service;
 
 import java.util.Optional;
 
@@ -7,6 +7,13 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.devconnect.auth.dto.AuthResponse;
+import com.devconnect.auth.dto.LoginRequest;
+import com.devconnect.auth.dto.RegisterRequest;
+import com.devconnect.auth.model.User;
+import com.devconnect.auth.repository.AuthRepository;
+import com.devconnect.auth.security.JWTUtil;
 
 @Service
 public class AuthService {

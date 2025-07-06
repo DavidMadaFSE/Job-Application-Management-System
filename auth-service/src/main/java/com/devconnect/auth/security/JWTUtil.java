@@ -1,4 +1,4 @@
-package com.devconnect.auth;
+package com.devconnect.auth.security;
 
 import java.util.Date;
 
