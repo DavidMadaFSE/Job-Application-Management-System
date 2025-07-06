@@ -20,8 +20,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String fullName;
-
     // Getters and Setters
     public long getId() {
         return id;
@@ -41,13 +39,5 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getName() {
-        return fullName;
     }
 }
